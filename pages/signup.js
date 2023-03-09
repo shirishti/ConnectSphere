@@ -2,7 +2,7 @@ import React , { useState, useEffect, useRef } from "react";
 import { HeaderMessage, FooterMessage } from "../components/Common/WelcomeMessage";
 import { Form, Button, Message, Segment, Divider } from "semantic-ui-react";
 import CommonInputs from "../components/Common/CommonInputs";
-
+import ImageDropDiv from "../components/Common/ImageDropDiv";
 const regexUserName = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/;
 function Signup() {
     const [user, setUser] = useState({
@@ -37,11 +37,22 @@ function Signup() {
     }
 
     const handleChange = e => {
-        const { name, value } = e.target;
-        setUser(prev => ({...prev, [name]:value}))
- 
-     
-    }
+      const { name, value, files } = e.target;
+  
+      if (name === "media") {
+        setMedia(files[0]);
+        setMediaPreview(URL.createObjectURL(files[0]));
+      }
+  
+      setUser(prev => ({ ...prev, [name]: value }));
+    };
+  
+  useEffect(() => {
+    const isUser = Object.values({ name, email, password, bio }).every(item =>
+      Boolean(item)
+    );
+    isUser ? setSubmitDisabled(false) : setSubmitDisabled(true);
+  }, [user]);
     return (
         <>
             <HeaderMessage />
@@ -52,7 +63,16 @@ function Signup() {
           content={errorMsg}
           onDismiss={() => setErrorMsg(null)}
                 />
-                <Segment>
+          <Segment>
+          <ImageDropDiv
+            mediaPreview={mediaPreview}
+            setMediaPreview={setMediaPreview}
+            setMedia={setMedia}
+            inputRef={inputRef}
+            highlighted={highlighted}
+            setHighlighted={setHighlighted}
+            handleChange={handleChange}
+          />
                 <Form.Input
             required
             label="Name"
@@ -121,6 +141,15 @@ function Signup() {
             showSocialLinks={showSocialLinks}
             setShowSocialLinks={setShowSocialLinks}
             handleChange={handleChange}
+            />
+            
+            <Divider hidden />
+          <Button
+            icon="signup"
+            content="Signup"
+            type="submit"
+            color="orange"
+            disabled={submitDisabled || !usernameAvailable}
           />
 
                  </Segment>
