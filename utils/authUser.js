@@ -1,0 +1,1 @@
+export const regexUserName = /^(?!.*\.\.)(?!.*\.$)[^\W][\W.]{0,29}$/;
