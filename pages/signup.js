@@ -3,7 +3,10 @@ import { HeaderMessage, FooterMessage } from "../components/Common/WelcomeMessag
 import { Form, Button, Message, Segment, Divider } from "semantic-ui-react";
 import CommonInputs from "../components/Common/CommonInputs";
 import ImageDropDiv from "../components/Common/ImageDropDiv";
+import axios from "axios";
+import baseUrl from "../utils/baseUrl";
 const regexUserName = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/;
+
 function Signup() {
     const [user, setUser] = useState({
         name: "",
@@ -16,7 +19,18 @@ function Signup() {
         instagram: ""
     });
     
-    const { name, email, password, bio } = user;
+  const { name, email, password, bio } = user;
+  
+  const handleChange = e => {
+    const { name, value, files } = e.target;
+
+    if (name === "media") {
+      setMedia(files[0]);
+      setMediaPreview(URL.createObjectURL(files[0]));
+    }
+
+    setUser(prev => ({ ...prev, [name]: value }));
+  };
     const [showSocialLinks, setShowSocialLinks] = useState(true);
     const [showPassword, setShowPassword] = useState(false);
     const [errorMsg, setErrorMsg] = useState(null);
@@ -30,29 +44,48 @@ function Signup() {
     const [media, setMedia] = useState(null);
     const [mediaPreview, setMediaPreview] = useState(null);
     const [highlighted, setHighlighted] = useState(false);
-    const inputRef = useRef();
+  const inputRef = useRef();
+  
 
-    const handleSubmit = e => {
-        e.preventDefault();
-    }
-
-    const handleChange = e => {
-      const { name, value, files } = e.target;
-  
-      if (name === "media") {
-        setMedia(files[0]);
-        setMediaPreview(URL.createObjectURL(files[0]));
-      }
-  
-      setUser(prev => ({ ...prev, [name]: value }));
-    };
-  
+   
   useEffect(() => {
     const isUser = Object.values({ name, email, password, bio }).every(item =>
       Boolean(item)
     );
     isUser ? setSubmitDisabled(false) : setSubmitDisabled(true);
   }, [user]);
+
+  const checkUsername = async () => {
+    setUsernameLoading(true);
+    try {
+     
+      const res = await axios.get(`/api/signup/${username}`);
+
+      if (res.data === "Available") {
+        setUsernameAvailable(true);
+        setUser(prev => ({ ...prev, username }));
+      }
+    } catch (error) {
+      setErrorMsg("Username Not Available");
+      setUsernameAvailable(false);
+    }
+    setUsernameLoading(false);
+  };
+  
+  useEffect(() => {
+    username === "" ? setUsernameAvailable(false) : checkUsername();
+  }, [username]);
+
+  const handleSubmit = e => {
+        e.preventDefault();
+  }
+ 
+ 
+
+  
+
+   
+ 
     return (
         <>
             <HeaderMessage />
