@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const Schema = mongoose.Schema;
 
@@ -12,13 +12,11 @@ const ProfileSchema = new Schema(
       facebook: { type: String },
       twitter: { type: String },
       youtube: { type: String },
-      instagram: { type: String }
-    }
+      instagram: { type: String },
+    },
   },
   { timestamps: true }
- 
 );
 
-export default mongoose.model("Profile", ProfileSchema);
-
-
+export default mongoose.models.Profile ||
+  mongoose.model("Profile", ProfileSchema);

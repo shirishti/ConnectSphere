@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const Schema = mongoose.Schema;
 
@@ -24,11 +24,9 @@ const UserSchema = new Schema(
 
     resetToken: { type: String },
 
-    expireToken: { type: Date }
+    expireToken: { type: Date },
   },
   { timestamps: true }
- 
 );
 
-export default mongoose.model('User', UserSchema);
-
+export default mongoose.models.User || mongoose.model("User", UserSchema);
