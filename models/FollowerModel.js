@@ -1,7 +1,9 @@
-const mongoose = require("mongoose");
+import mongoose from 'mongoose';
+
 const Schema = mongoose.Schema;
 
-const FollowerSchema = new mongoose.Schema({
+const FollowerSchema = new Schema(
+  {
   user: { type: Schema.Types.ObjectId, ref: "User" },
 
   followers: [
@@ -17,5 +19,5 @@ const FollowerSchema = new mongoose.Schema({
   ]
 });
 
-module.exports = mongoose.model("Follower", FollowerSchema);
+export default mongoose.model("Follower", FollowerSchema);
 // // module.exports = mongoose.models.Follower || mongoose.model('Follower', FollowerSchema);

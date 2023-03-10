@@ -7,7 +7,8 @@ const picUploader = async media => {
         form.append("upload_preset", "connectSphere");
         form.append("cloud_name", "SHIRISHTI JAIN");
 
-        const res = await axios.post(process.env.CLOUDINARY_URL, form);
+        const res = await axios.post("https://api.cloudinary.com/v1_1/dfcdxqtwk/image/upload", form);
+       
         return res.data.url;
     } catch (error) {
         return;

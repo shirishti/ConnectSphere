@@ -1,9 +1,8 @@
-const mongoose = require("mongoose");
+import mongoose from 'mongoose';
+
 const Schema = mongoose.Schema;
 
-
-const UserSchema = new mongoose.Schema(
-
+const UserSchema = new Schema(
   {
     name: { type: String, required: true },
 
@@ -28,7 +27,8 @@ const UserSchema = new mongoose.Schema(
     expireToken: { type: Date }
   },
   { timestamps: true }
+ 
 );
 
-module.exports =  mongoose.model('User', UserSchema);
-// // module.exports = mongoose.models.User || mongoose.model('User', UserSchema);
+export default mongoose.model('User', UserSchema);
+

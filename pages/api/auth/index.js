@@ -1,10 +1,9 @@
-const express = require("express");
-const router = express.Router();
-const UserModel = require("../../../models/UserModel");
-const FollowerModel = require("../../../models/FollowerModel");
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
-const isEmail = require("validator/lib/isEmail");
+import express from "express";
+import UserModel from "../../../models/UserModel";
+import FollowerModel from "../../../models/FollowerModel";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
+import isEmail from "validator/lib/isEmail";
 
 
 export default async function handler(req, res) {
@@ -43,10 +42,11 @@ export default async function handler(req, res) {
                 (err, token) => {
                     if (err) throw err;
                     // set JWT token as cookie
-                    res.cookie('token', token, { httpOnly: true });
-                    res.json({ token });
+                    // res.cookie('token', token, { httpOnly: true });
+                    // res.json({ token });
                 }
             );
+            res.setHeader('Access-Control-Allow-Origin', '*');
         } catch (error) {
             console.log(error);
             return res.status(500).send('Server error');

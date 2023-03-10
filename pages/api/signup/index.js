@@ -1,9 +1,10 @@
-const UserModel = require("../../../models/UserModel");
-const ProfileModel = require("../../../models/ProfileModel");
-const FollowerModel = require("../../../models/FollowerModel");
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
-const isEmail = require("validator/lib/isEmail");
+import UserModel from "../../../models/UserModel";
+import ProfileModel from "../../../models/ProfileModel";
+import FollowerModel from "../../../models/FollowerModel";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
+import isEmail from "validator/lib/isEmail";
+
 
 
 
@@ -69,7 +70,9 @@ export default async function handler(req, res) {
                     if (err) throw err;
                     res.status(200).json(token);   
                 }
-              );
+            );
+            
+            res.setHeader('Access-Control-Allow-Origin', '*');
         } catch (error) {
             console.log(error);
             return res.status(500).send('Server error');

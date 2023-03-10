@@ -1,11 +1,10 @@
-const UserModel = require("../../../models/UserModel");
-const ProfileModel = require("../../../models/ProfileModel");
-const FollowerModel = require("../../../models/FollowerModel");
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
-const isEmail = require("validator/lib/isEmail");;;
-import { useRouter } from 'next/router';
-
+import UserModel from "../../../models/UserModel";
+import ProfileModel from "../../../models/ProfileModel";
+import FollowerModel from "../../../models/FollowerModel";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
+import isEmail from "validator/lib/isEmail";
+import { useRouter } from "next/router";
 const regexUserName = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/;
 
 
