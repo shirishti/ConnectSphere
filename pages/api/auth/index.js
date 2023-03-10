@@ -4,9 +4,11 @@ import FollowerModel from "../../../models/FollowerModel";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import isEmail from "validator/lib/isEmail";
+import connectDB from "../../../utilsServer/connectDB";
 
 
 export default async function handler(req, res) {
+    await connectDB();
     if (req.method === "POST") {
         const { email, password } = req.body.user;  
 
@@ -37,7 +39,7 @@ export default async function handler(req, res) {
             };
             jwt.sign(
                 payload,
-                process.env.JWT_SECRET,
+                "shirishti",
                 { expiresIn: "1d" }, // token expires in 1 day
                 (err, token) => {
                     if (err) throw err;

@@ -60,15 +60,11 @@ export default async function handler(req, res) {
       if (twitter) profile.social.twitter = twitter;
 
       await new ProfileModel(profile).save();
-    //   await new FollowerModel({
-    //     user: user._id,
-    //     followers: [],
-    //     following: [],
-    //   }).save();
+      await new FollowerModel({ user: user._id, followers: [], following: [] }).save();
 
       const token = jwt.sign(
         { userId: user._id },
-        process.env.JWT_SECRET,
+       "shirishti",
         { expiresIn: "1d" },
         (err, token) => {
           if (err) throw err;
